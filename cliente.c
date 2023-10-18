@@ -4,6 +4,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <unistd.h>
 
 int main() {
     int clientSocket;
@@ -22,31 +23,31 @@ int main() {
     }
 
     while (1) {
-    int elemento, acao, pv;
+        int elemento, acao, pv;
 
-    recv(clientSocket, &pv, sizeof(pv), 0);
-    if (pv <= 0) {
-        printf("Você perdeu!\n");
-        break;
+        recv(clientSocket, &pv, sizeof(pv), 0);
+        if (pv <= 0) {
+            printf("Você perdeu!\n");
+            break;
+        }
+
+        printf("Seus pontos de vida: %d\n", pv);
+
+        printf("Escolha um elemento (1- Água, 2- Terra, 3- Fogo, 4- Ar): ");
+        scanf("%d", &elemento);
+        send(clientSocket, &elemento, sizeof(elemento), 0);
+
+        printf("Escolha uma ação (1- Atacar, 2- Defender): ");
+        scanf("%d", &acao);
+        send(clientSocket, &acao, sizeof(acao), 0);
+
+        // [Receba o resultado do servidor e imprima para o jogador]
+
+        printf("Esperando a escolha do oponente...\n");
+        // [Receba as escolhas do oponente e imprima para o jogador]
     }
 
-    printf("Seus pontos de vida: %d\n", pv);
+    close(clientSocket);
 
-    printf("Escolha um elemento (1- Água, 2- Terra, 3- Fogo, 4- Ar): ");
-    scanf("%d", &elemento);
-    send(clientSocket, &elemento, sizeof(elemento), 0);
-
-    printf("Escolha uma ação (1- Atacar, 2- Defender): ");
-    scanf("%d", &acao);
-    send(clientSocket, &acao, sizeof(acao), 0);
-
-    // [Receba o resultado do servidor e imprima para o jogador]
-
-    printf("Esperando a escolha do oponente...\n");
-    // [Receba as escolhas do oponente e imprima para o jogador]
-}
-
-close(clientSocket);
-
-return 0;
+    return 0;
 }

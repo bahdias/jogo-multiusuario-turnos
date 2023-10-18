@@ -4,6 +4,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <unistd.h>
 
 // Função para calcular o resultado do combate
 int combateElementos(int elementoJogador, int elementoOponente) {
@@ -12,9 +13,9 @@ int combateElementos(int elementoJogador, int elementoOponente) {
         (elementoJogador == 2 && elementoOponente == 1) ||
         (elementoJogador == 3 && elementoOponente == 2) ||
         (elementoJogador == 4 && elementoOponente == 3)) {
-        return -1; // Jogador ganha
+        return -1; // Jogador perde PV
     }
-    return 1; // Oponente ganha
+    return 1; // Oponente perde PV
 }
 
 int main() {
